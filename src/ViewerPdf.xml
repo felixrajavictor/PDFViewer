@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<widget id="mxtechies.viewerpdf.ViewerPdf" pluginWidget="true" needsEntityContext="false" offlineCapable="true"
+        supportedPlatform="Web"
+        xmlns="http://www.mendix.com/widget/1.0/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.mendix.com/widget/1.0/ ../node_modules/mendix/custom_widget.xsd">
+    <name>Viewer Pdf</name>
+    <description>Feature-rich PDF viewer. Pass a base64 string, data URL, or HTTP URL via the PDF String property.</description>
+    <icon/>
+    <properties>
+        <propertyGroup caption="Data Source">
+            <property key="pdfUrl" type="expression" required="false">
+                <caption>PDF String</caption>
+                <description>Pass the PDF content as a base64 string (raw base64 or data:application/pdf;base64,... format), or a standard HTTP/HTTPS URL.</description>
+                <returnType type="String"/>
+            </property>
+            <property key="fileName" type="expression" required="false">
+                <caption>Download File Name Test</caption>
+                <description>Name for the downloaded file (without .pdf extension). Defaults to "document".</description>
+                <returnType type="String"/>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Appearance">
+            <property key="height" type="string" required="false" defaultValue="600px">
+                <caption>Height</caption>
+                <description>Height of the viewer container (e.g. 600px, 80vh, 100%)</description>
+            </property>
+            <property key="darkMode" type="boolean" defaultValue="false">
+                <caption>Dark Mode</caption>
+                <description>Enable dark theme for the viewer</description>
+            </property>
+        </propertyGroup>
+        <propertyGroup caption="Behavior">
+            <property key="showThumbnailSidebar" type="boolean" defaultValue="false">
+                <caption>Show Thumbnail Sidebar</caption>
+                <description>Show the thumbnail panel on the left side for page navigation. Default: off.</description>
+            </property>
+            <property key="showSearchButton" type="boolean" defaultValue="false">
+                <caption>Enable Search</caption>
+                <description>Show the search button in the toolbar to allow full-text search within the PDF document</description>
+            </property>
+            <property key="showDownloadButton" type="boolean" defaultValue="false">
+                <caption>Enable Download</caption>
+                <description>Show a download button in the toolbar</description>
+            </property>
+            <property key="showPrintButton" type="boolean" defaultValue="false">
+                <caption>Enable Print</caption>
+                <description>Show a print button in the toolbar</description>
+            </property>
+            <property key="showUploadButton" type="boolean" defaultValue="false">
+                <caption>Enable Import (Upload)</caption>
+                <description>Show an import/upload button so users can load a PDF from their local device (also enables drag-and-drop)</description>
+            </property>
+            <property key="showCopyTextButton" type="boolean" defaultValue="false">
+                <caption>Enable Copy All Text</caption>
+                <description>Show a copy-text button that copies all document text to the clipboard</description>
+            </property>
+            <property key="showRotateButton" type="boolean" defaultValue="false">
+                <caption>Enable Rotate</caption>
+                <description>Show a rotate button in the toolbar to rotate the PDF pages 90° at a time</description>
+            </property>
+            <property key="showFitToPageButton" type="boolean" defaultValue="false">
+                <caption>Enable Fit to Page</caption>
+                <description>Show a fit-to-page button in the toolbar (scales the PDF to fit both width and height). Fit to Width is always available.</description>
+            </property>
+        </propertyGroup>
+    </properties>
+</widget>

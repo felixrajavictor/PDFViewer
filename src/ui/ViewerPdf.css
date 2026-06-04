@@ -1,0 +1,827 @@
+/* ============================================================
+   PDF Viewer Widget — ViewerPdf.css
+   ============================================================ */
+
+/* ── Widget wrapper ─────────────────────────────────────────── */
+.widget-viewer-pdf {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-size: 13px;
+}
+
+/* ── Main viewer shell ──────────────────────────────────────── */
+.pdf-viewer {
+    --pdf-bg: #f0f0f0;
+    --pdf-surface: #ffffff;
+    --pdf-toolbar-bg: #fafafa;
+    --pdf-toolbar-border: #e0e0e0;
+    --pdf-sidebar-bg: #f5f5f5;
+    --pdf-sidebar-border: #e0e0e0;
+    --pdf-btn-color: #374151;
+    --pdf-btn-bg: transparent;
+    --pdf-btn-hover-bg: #e5e7eb;
+    --pdf-btn-active-bg: #dbeafe;
+    --pdf-btn-active-color: #1d4ed8;
+    --pdf-btn-disabled-color: #c0c0c0;
+    --pdf-text: #111827;
+    --pdf-muted: #6b7280;
+    --pdf-badge-bg: rgba(0, 0, 0, 0.45);
+    --pdf-badge-text: #fff;
+    --pdf-thumb-border: transparent;
+    --pdf-thumb-active-border: #2563eb;
+    --pdf-highlight-bg: #fef08a;
+    --pdf-highlight-text: #000;
+    --pdf-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    --pdf-error-color: #dc2626;
+    --pdf-spinner-color: #3b82f6;
+    --pdf-search-bg: #ffffff;
+    --pdf-search-border: #e5e7eb;
+
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--pdf-toolbar-border);
+    border-radius: 6px;
+    overflow: hidden;
+    background: var(--pdf-bg);
+    position: relative;
+    min-height: 200px;
+}
+
+/* ── Dark mode ──────────────────────────────────────────────── */
+.pdf-viewer.pdf-dark {
+    --pdf-bg: #1a1a2e;
+    --pdf-surface: #16213e;
+    --pdf-toolbar-bg: #0f3460;
+    --pdf-toolbar-border: #1d4a7a;
+    --pdf-sidebar-bg: #16213e;
+    --pdf-sidebar-border: #1d4a7a;
+    --pdf-btn-color: #e2e8f0;
+    --pdf-btn-hover-bg: #1e3a5f;
+    --pdf-btn-active-bg: #1e40af;
+    --pdf-btn-active-color: #93c5fd;
+    --pdf-btn-disabled-color: #4b5563;
+    --pdf-text: #f1f5f9;
+    --pdf-muted: #94a3b8;
+    --pdf-badge-bg: rgba(0, 0, 0, 0.6);
+    --pdf-badge-text: #f1f5f9;
+    --pdf-thumb-active-border: #60a5fa;
+    --pdf-highlight-bg: #ca8a04;
+    --pdf-highlight-text: #fff;
+    --pdf-error-color: #f87171;
+    --pdf-spinner-color: #60a5fa;
+    --pdf-search-bg: #16213e;
+    --pdf-search-border: #1d4a7a;
+}
+
+/* Invert PDF pages in dark mode for comfortable reading */
+.pdf-viewer.pdf-dark .react-pdf__Page canvas {
+    filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* ── Toolbar ────────────────────────────────────────────────── */
+.pdf-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 8px;
+    background: var(--pdf-toolbar-bg);
+    border-bottom: 1px solid var(--pdf-toolbar-border);
+    flex-shrink: 0;
+    flex-wrap: wrap;
+}
+
+/* Version stamp — visible red label that confirms correct .mpk is deployed */
+.pdf-version-stamp {
+    font-size: 11px;
+    font-weight: 700;
+    color: #dc2626;
+    letter-spacing: 0.03em;
+    padding: 1px 6px;
+    border: 1px solid #dc2626;
+    border-radius: 4px;
+    margin-right: 4px;
+    white-space: nowrap;
+    cursor: default;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.pdf-tb-group {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+
+.pdf-tb-group + .pdf-tb-group {
+    margin-left: 4px;
+    padding-left: 8px;
+    border-left: 1px solid var(--pdf-toolbar-border);
+}
+
+.pdf-tb-nav {
+    flex: 1;
+    justify-content: center;
+}
+
+.pdf-tb-zoom {
+    justify-content: flex-end;
+}
+
+/* Toolbar buttons */
+.pdf-tb-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    height: 30px;
+    min-width: 30px;
+    padding: 0 6px;
+    background: var(--pdf-btn-bg);
+    color: var(--pdf-btn-color);
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.12s, color 0.12s;
+    line-height: 1;
+}
+
+.pdf-tb-btn:hover:not(:disabled) {
+    background: var(--pdf-btn-hover-bg);
+}
+
+.pdf-tb-btn.active,
+.pdf-tb-btn:focus-visible {
+    background: var(--pdf-btn-active-bg);
+    color: var(--pdf-btn-active-color);
+    outline: none;
+}
+
+.pdf-tb-btn:disabled {
+    color: var(--pdf-btn-disabled-color);
+    cursor: default;
+}
+
+.pdf-tb-btn svg {
+    pointer-events: none;
+}
+
+/* Page navigation input */
+.pdf-page-nav {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--pdf-text);
+}
+
+.pdf-page-input {
+    width: 40px;
+    height: 26px;
+    padding: 0 4px;
+    text-align: center;
+    border: 1px solid var(--pdf-toolbar-border);
+    border-radius: 4px;
+    background: var(--pdf-surface);
+    color: var(--pdf-text);
+    font-size: 13px;
+    font-family: inherit;
+}
+
+.pdf-page-input:focus {
+    outline: 2px solid var(--pdf-btn-active-color, #3b82f6);
+    outline-offset: 1px;
+    border-color: transparent;
+}
+
+.pdf-page-sep {
+    color: var(--pdf-muted);
+    font-size: 13px;
+}
+
+.pdf-page-total {
+    color: var(--pdf-muted);
+    font-size: 13px;
+    min-width: 20px;
+}
+
+/* Zoom label */
+.pdf-zoom-label {
+    min-width: 42px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--pdf-text);
+    user-select: none;
+}
+
+/* ── Search bar ─────────────────────────────────────────────── */
+.pdf-search-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    background: var(--pdf-search-bg);
+    border-bottom: 1px solid var(--pdf-search-border);
+    flex-shrink: 0;
+    color: var(--pdf-muted);
+}
+
+.pdf-search-input {
+    flex: 1;
+    height: 28px;
+    padding: 0 8px;
+    border: 1px solid var(--pdf-search-border);
+    border-radius: 14px;
+    background: var(--pdf-bg);
+    color: var(--pdf-text);
+    font-size: 13px;
+    font-family: inherit;
+    transition: border-color 0.15s;
+}
+
+.pdf-search-input:focus {
+    outline: none;
+    border-color: var(--pdf-btn-active-color, #3b82f6);
+}
+
+.pdf-search-input::placeholder {
+    color: var(--pdf-muted);
+}
+
+.pdf-search-clear {
+    background: none;
+    border: none;
+    color: var(--pdf-muted);
+    cursor: pointer;
+    font-size: 13px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    transition: color 0.12s;
+}
+
+.pdf-search-clear:hover {
+    color: var(--pdf-text);
+}
+
+/* Search / copy highlight inside text layer */
+.pdf-highlight,
+mark.pdf-highlight {
+    background-color: var(--pdf-highlight-bg) !important;
+    color: var(--pdf-highlight-text) !important;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+/* Highlight text on selection (copy feedback) */
+.react-pdf__Page__textContent ::selection {
+    background-color: #bfdbfe;
+    color: #000;
+}
+
+.pdf-viewer.pdf-dark .react-pdf__Page__textContent ::selection {
+    background-color: #1e40af;
+    color: #fff;
+}
+
+/* ── Body: sidebar + content ────────────────────────────────── */
+.pdf-body {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+    min-height: 0;
+}
+
+/* ── Thumbnail sidebar ──────────────────────────────────────── */
+.pdf-sidebar {
+    width: 130px;
+    min-width: 130px;
+    background: var(--pdf-sidebar-bg);
+    border-right: 1px solid var(--pdf-sidebar-border);
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 8px 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.pdf-sidebar::-webkit-scrollbar {
+    width: 4px;
+}
+
+.pdf-sidebar::-webkit-scrollbar-thumb {
+    background: var(--pdf-toolbar-border);
+    border-radius: 2px;
+}
+
+.pdf-thumb {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3px;
+    padding: 4px;
+    border: 2px solid var(--pdf-thumb-border);
+    border-radius: 5px;
+    cursor: pointer;
+    background: none;
+    transition: border-color 0.12s, background 0.12s;
+}
+
+.pdf-thumb:hover {
+    background: var(--pdf-btn-hover-bg);
+}
+
+.pdf-thumb.pdf-thumb-active {
+    border-color: var(--pdf-thumb-active-border);
+    background: var(--pdf-btn-active-bg);
+}
+
+.pdf-thumb canvas {
+    border-radius: 2px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+    pointer-events: none;
+    max-width: 100%;
+}
+
+.pdf-thumb-num {
+    font-size: 10px;
+    color: var(--pdf-muted);
+    font-weight: 500;
+    pointer-events: none;
+}
+
+.pdf-thumb-loading {
+    width: 80px;
+    height: 110px;
+    background: var(--pdf-toolbar-border);
+    border-radius: 2px;
+    animation: pdf-pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Main scrollable content ────────────────────────────────── */
+.pdf-content {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: auto;
+    padding: 16px 24px;
+    background: var(--pdf-bg);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    /*
+     * Performance: containment tells the browser this subtree is visually
+     * and layout-isolated, enabling more aggressive optimisations while
+     * scrolling and during zoom repaints.
+     */
+    contain: layout style;
+}
+
+.pdf-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.pdf-content::-webkit-scrollbar-thumb {
+    background: #c0c0c0;
+    border-radius: 4px;
+}
+
+.pdf-viewer.pdf-dark .pdf-content::-webkit-scrollbar-thumb {
+    background: #334155;
+}
+
+/* ── Individual page wrapper ────────────────────────────────── */
+.pdf-page-wrap {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.pdf-page-wrap .react-pdf__Page {
+    box-shadow: var(--pdf-shadow);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.pdf-page-wrap canvas {
+    display: block;
+}
+
+/* Page number badge (bottom corner) */
+.pdf-page-badge {
+    position: absolute;
+    bottom: 6px;
+    right: 6px;
+    background: var(--pdf-badge-bg);
+    color: var(--pdf-badge-text);
+    font-size: 10px;
+    font-weight: 600;
+    padding: 1px 6px;
+    border-radius: 10px;
+    pointer-events: none;
+    user-select: none;
+    opacity: 0.7;
+}
+
+/* Page skeleton during lazy load */
+.pdf-page-skeleton {
+    background: var(--pdf-surface);
+    border-radius: 2px;
+    box-shadow: var(--pdf-shadow);
+    animation: pdf-pulse 1.4s ease-in-out infinite;
+}
+
+/* ── Loading state ──────────────────────────────────────────── */
+.pdf-loading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 60px 20px;
+    color: var(--pdf-muted);
+    font-size: 14px;
+    width: 100%;
+}
+
+.pdf-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid var(--pdf-toolbar-border);
+    border-top-color: var(--pdf-spinner-color);
+    border-radius: 50%;
+    animation: pdf-spin 0.7s linear infinite;
+}
+
+/* ── Error state ────────────────────────────────────────────── */
+.pdf-error {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 60px 24px;
+    text-align: center;
+    color: var(--pdf-error-color);
+    width: 100%;
+}
+
+.pdf-error svg {
+    color: var(--pdf-error-color);
+    opacity: 0.7;
+}
+
+.pdf-error-title {
+    font-size: 16px;
+    font-weight: 600;
+    margin: 0;
+    color: var(--pdf-error-color);
+}
+
+.pdf-error-detail {
+    font-size: 12px;
+    margin: 0;
+    color: var(--pdf-muted);
+    max-width: 400px;
+    word-break: break-word;
+}
+
+.pdf-error-hint {
+    font-size: 12px;
+    margin: 0;
+    color: var(--pdf-muted);
+    font-style: italic;
+}
+
+/* ── Empty / no-URL state ───────────────────────────────────── */
+.pdf-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 60px 24px;
+    text-align: center;
+    color: #9ca3af;
+    width: 100%;
+    height: 100%;
+    min-height: 200px;
+    background: #f9fafb;
+    border: 2px dashed #e5e7eb;
+    border-radius: 6px;
+}
+
+.pdf-empty-icon {
+    color: #d1d5db;
+}
+
+.pdf-empty-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin: 0;
+    color: #6b7280;
+}
+
+.pdf-empty-sub {
+    font-size: 12px;
+    margin: 0;
+    color: #9ca3af;
+}
+
+/* ── Canvas page ────────────────────────────────────────────── */
+.pdf-canvas {
+    display: block;
+    border-radius: 2px;
+    /*
+     * Performance: promote canvas to its own compositor layer.
+     * This means zoom / scroll repaints don't invalidate adjacent layers.
+     */
+    will-change: transform;
+}
+
+/* ── Text layer (pdfjs) ─────────────────────────────────────── */
+/*
+ * IMPORTANT: --scale-factor is set by PdfPage.tsx via:
+ *   container.style.setProperty("--scale-factor", String(viewport.scale))
+ * This MUST happen before pdfjsLib.renderTextLayer() is called.
+ * Setting a CSS default here prevents the pdfjs v3.x console error
+ * "The --scale-factor CSS-variable must be set…" on first paint.
+ */
+.pdf-text-layer {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    line-height: 1;
+
+    /* Default scale factor — JS overrides this each render */
+    --scale-factor: 1;
+}
+
+/*
+ * Line-by-line text selection
+ * Each span is a single glyph / word run positioned by a CSS transform.
+ * Keeping color: transparent lets the canvas render show through while
+ * a ::selection pseudo-element gives a visible highlight band.
+ * cursor: text everywhere in the layer lets the user click any spot.
+ */
+.pdf-text-layer span,
+.pdf-text-layer br {
+    color: transparent;
+    position: absolute;
+    white-space: pre;
+    cursor: text;
+    transform-origin: 0% 0%;
+    /* Ensure every browser allows text selection on these nodes */
+    user-select: text;
+    -webkit-user-select: text;
+    /* Helps hit-testing precision for narrow glyphs */
+    pointer-events: auto;
+}
+
+/* Selection highlight — transparent foreground keeps canvas visible */
+.pdf-text-layer ::selection {
+    background: rgba(37, 99, 235, 0.30);
+    color: transparent;
+}
+
+.pdf-viewer.pdf-dark .pdf-text-layer ::selection {
+    background: rgba(96, 165, 250, 0.35);
+    color: transparent;
+}
+
+/* Search / copy highlight marks */
+mark.pdf-hl {
+    background: var(--pdf-highlight-bg) !important;
+    color: var(--pdf-highlight-text) !important;
+    border-radius: 2px;
+    padding: 0 1px;
+}
+
+/* Dark mode: invert canvas pages for comfortable reading */
+.pdf-viewer.pdf-dark .pdf-canvas {
+    filter: invert(0.85) hue-rotate(180deg);
+}
+
+/* ── Animations ─────────────────────────────────────────────── */
+@keyframes pdf-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes pdf-pulse {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.45; }
+}
+
+/* ── Toolbar badge strip ────────────────────────────────────── */
+.pdf-tb-badges {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-left: auto;
+}
+
+.pdf-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    padding: 2px 7px;
+    border-radius: 10px;
+    font-size: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+    user-select: none;
+    pointer-events: none;
+}
+
+/* Local file badge (shows filename + × close button) */
+.pdf-badge-local {
+    background: #f3e8ff;
+    color: #7e22ce;
+    gap: 6px;
+    max-width: 200px;
+}
+
+.pdf-viewer.pdf-dark .pdf-badge-local {
+    background: #4c1d95;
+    color: #d8b4fe;
+}
+
+.pdf-badge-close {
+    background: none;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    opacity: 0.7;
+    padding: 0 1px;
+    font-size: 10px;
+    line-height: 1;
+    flex-shrink: 0;
+}
+.pdf-badge-close:hover { opacity: 1; }
+
+.pdf-badge-offline {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.pdf-viewer.pdf-dark .pdf-badge-offline {
+    background: #7f1d1d;
+    color: #fca5a5;
+}
+
+.pdf-badge-cached {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.pdf-viewer.pdf-dark .pdf-badge-cached {
+    background: #0c4a6e;
+    color: #7dd3fc;
+}
+
+/* ── Copy button states ─────────────────────────────────────── */
+.pdf-copy-btn.copied {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+}
+
+.pdf-viewer.pdf-dark .pdf-copy-btn.copied {
+    background: #14532d !important;
+    color: #86efac !important;
+}
+
+.pdf-copy-btn.copy-error {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+}
+
+/* ── Upload button (large, in empty state) ──────────────────── */
+.pdf-upload-btn-large {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 8px 18px !important;
+    background: #2563eb !important;
+    color: #fff !important;
+    border-radius: 6px !important;
+    font-size: 13px !important;
+    font-weight: 600 !important;
+    height: auto !important;
+    min-width: auto !important;
+    cursor: pointer;
+    transition: background 0.15s !important;
+}
+
+.pdf-upload-btn-large:hover {
+    background: #1d4ed8 !important;
+}
+
+/* ── Drag-and-drop overlay ──────────────────────────────────── */
+.pdf-viewer.pdf-drop-active,
+.pdf-empty.pdf-drop-active {
+    outline: 3px dashed #2563eb;
+    outline-offset: -3px;
+}
+
+.pdf-drop-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    background: rgba(37, 99, 235, 0.12);
+    backdrop-filter: blur(2px);
+    pointer-events: none;
+    border-radius: 4px;
+    color: #2563eb;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.pdf-drop-overlay svg {
+    width: 40px;
+    height: 40px;
+    color: #2563eb;
+}
+
+.pdf-viewer.pdf-dark .pdf-drop-overlay {
+    background: rgba(59, 130, 246, 0.18);
+    color: #93c5fd;
+}
+
+.pdf-viewer.pdf-dark .pdf-drop-overlay svg {
+    color: #93c5fd;
+}
+
+.pdf-drop-hint {
+    margin-top: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #2563eb;
+}
+
+/* ── Toast notification ─────────────────────────────────────── */
+.pdf-toast {
+    position: absolute;
+    top: 52px;          /* just below toolbar */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    padding: 7px 18px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+    pointer-events: none;
+    white-space: nowrap;
+    background: #1e293b;
+    color: #f8fafc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    animation: pdf-toast-in 0.2s ease;
+}
+
+.pdf-toast.pdf-toast-success {
+    background: #15803d;
+    color: #f0fdf4;
+}
+
+.pdf-toast.pdf-toast-error {
+    background: #b91c1c;
+    color: #fef2f2;
+}
+
+@keyframes pdf-toast-in {
+    from { opacity: 0; transform: translateX(-50%) translateY(-8px); }
+    to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+/* ── Responsive: narrow screens ─────────────────────────────── */
+@media (max-width: 600px) {
+    .pdf-sidebar {
+        width: 88px;
+        min-width: 88px;
+    }
+
+    .pdf-toolbar {
+        gap: 2px;
+    }
+
+    .pdf-tb-group + .pdf-tb-group {
+        margin-left: 2px;
+        padding-left: 4px;
+    }
+
+    .pdf-zoom-label {
+        min-width: 34px;
+    }
+
+    .pdf-content {
+        padding: 8px 8px;
+    }
+}
