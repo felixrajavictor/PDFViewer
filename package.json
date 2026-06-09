@@ -4,7 +4,7 @@
   "version": "1.0.0",
   "description": "A feature-rich, fully client-side PDF viewer for Mendix. Renders PDFs from base64, data URLs, or HTTP(S) URLs with thumbnails, full-text search, zoom, rotate, print, download, upload, copy-text, dark mode, and offline caching. Built on PDF.js, CSP-safe with zero external network requests.",
   "copyright": "© Mendix Technology BV 2026. All rights reserved.",
-  "author": "felix raja v",
+  "author": "Krishnaraj.R",
   "engines": {
     "node": ">=16"
   },
